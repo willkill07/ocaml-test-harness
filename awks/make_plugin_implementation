@@ -1,0 +1,14 @@
+#!/usr/bin/env awk
+BEGIN {
+    print "module type PLUG = "
+    print "  sig"
+}
+{
+    print;
+}
+END {
+    print "  end"
+    print ";;"
+    print "let p = ref None;;"
+    print "let get_plugin () : (module PLUG)  = match !p with | Some s -> s | None -> failwith \"No plugin loaded\""
+}

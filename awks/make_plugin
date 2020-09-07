@@ -1,0 +1,12 @@
+#!/usr/bin/env awk
+BEGIN{
+    print "open " moduleName ";;";
+    print "module M:PLUG =\n  struct";
+}
+{
+    $1 = "let"
+    print "    " $0 " = " $2;
+}
+END {
+    print "  end\n\nlet() = p := Some (module M:PLUG)";
+}
