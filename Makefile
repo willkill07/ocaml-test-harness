@@ -37,13 +37,12 @@ tidy : clean
 INTERFACE := ${name}.mli
 MODULE_NAME := ${Name}_plugin_interface
 
-${name}_plugin.ml: ${name}.ml
+${name}_plugin.ml : ${name}.ml
 	cp $< $@
 	awk -f ./awks/make_plugin -v moduleName=${MODULE_NAME} ${INTERFACE} >> $@
 
-${name}_plugin_loader.ml : partials/plugin_loader_part.ml
-	cp partials/plugin_loader_part.ml $@
-	awk -f ./awks/make_plugin_loader -v moduleName=${MODULE_NAME} -v module=${Name} ${INTERFACE} >> $@
+${name}_plugin_loader.ml :
+	awk -f ./awks/make_plugin_loader -v moduleName=${MODULE_NAME} -v module=${Name} ${INTERFACE} > $@
 
 ${name}_plugin_interface.ml :
 	awk -f ./awks/make_plugin_implementation ${INTERFACE} > $@

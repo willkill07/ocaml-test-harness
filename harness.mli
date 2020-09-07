@@ -22,6 +22,8 @@ val test : string ->
 val invoke_runner : (string * (runner_result -> runner_result * (string * Json.json)) list) list -> unit
 (* parameter usage: [ ("key", [ tests* ]), ..., ("keyN", [ tests* ]) ] *)
 
+val load_solution : string -> unit -> result
+
 val run_cmd : string -> bool * string
 val runtest : string -> 'res -> (unit -> 'arg1 -> 'res) -> 'arg1 -> unit -> result
 val runtest2 : string -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'res) -> 'arg1 -> 'arg2 -> unit -> result
