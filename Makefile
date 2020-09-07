@@ -3,7 +3,7 @@
 name := tail
 Name := Tail
 
-INTERFACE_SRC := json.mli harness.mli codecheck.mli tail.mli
+INTERFACE_SRC := json.mli harness.mli codecheck.mli ${name}.mli
 INTERFACE_OBJ := $(INTERFACE_SRC:.mli=.cmi)
 GENERATED_SRC := ${name}_plugin.ml ${name}_plugin_loader.ml ${name}_plugin_interface.ml
 
@@ -24,7 +24,7 @@ test : $(OBJ)
 	ocamlc -c $^
 
 clean :
-	-@rm -vf *.cmi *.cmo tail_plug.ml test *.cmt 
+	-@rm -vf *.cmi *.cmo test *.cmt 
 
 tidy : clean
 	-@rm -vf $(GENERATED_SRC)

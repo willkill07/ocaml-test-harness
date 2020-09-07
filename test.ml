@@ -3,10 +3,12 @@ open Json;;
 open Codecheck;;
 open Tail_plugin_loader;;
 
+let file_base = "tail";;
+
 let compile = ("Compile", [
-    test "Compile student submission" 0 (compile "tail");
-    test "Check student submission for Array, Loops, and References" 0 (check_pervasives "tail");
-    test "Load student submission" 0 (load_solution "tail")
+    test "Compile student submission" 0 (compile file_base);
+    test "Check student submission for Array, Loops, and References" 0 (check_pervasives file_base);
+    test "Load student submission" 0 (load_solution file_base)
   ])
 and factorial = ("factorial1", [
       test "structure" 0 (check_style "factorial1" [check_non_tailrec; check_ite; check_non_match] "Must use if-then-else");
