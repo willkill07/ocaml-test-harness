@@ -105,50 +105,50 @@ let run_cmd cmd =
 
 let invoke func = func ()
 
-let runtest tag expected func x () =
+let runtest (tag:string) (expected:'r) (op:'r->'r->bool) func x () =
   try
     let actual = invoke func x in
-    if actual = expected then
+    if op actual expected then
       Passed
     else
       Failed "mismatch between expected and actual value"
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest2 tag expected func x y () =
+let runtest2 (tag:string) (expected:'r) (op:'r->'r->bool) func x y () =
   try
     let actual = invoke func x y in
-    if actual = expected then
+    if op actual expected then
       Passed
     else
       Failed "mismatch between expected and actual value"
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest3 tag expected func x y z () =
+let runtest3 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z () =
   try
     let actual = invoke func x y z in
-    if actual = expected then
+    if op actual expected then
       Passed
     else
       Failed "mismatch between expected and actual value"
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest4 tag expected func x y z a () =
+let runtest4 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a () =
   try
     let actual = invoke func x y z a in
-    if actual = expected then
+    if op actual expected then
       Passed
     else
       Failed "mismatch between expected and actual value"
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest5 tag expected func x y z a b () =
+let runtest5 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a b () =
   try
     let actual = invoke func x y z a b in
-    if actual = expected then
+    if op actual expected then
       Passed
     else
       Failed "mismatch between expected and actual value"

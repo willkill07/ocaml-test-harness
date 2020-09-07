@@ -3,7 +3,7 @@ BEGIN{
     print "open " moduleName ";;";
 }
 /val/ {
-    print "let f" $2 " = fun () -> "
+    print "let " $2 " = fun () -> "
     print "  let module " module " = (val get_plugin () : PLUG) in"
     print "    (" module "." $2 ")"
 }
