@@ -18,10 +18,10 @@ let check_style (name:string) checks info = fun () ->
     |> List.map (fun x -> x name)
     |> List.fold_left (&&) true
   in
-    if status then
-      Passed
-    else
-      Abort info
+  if status then
+    Passed
+  else
+    Abort info
 ;;
 
 let compile (name:string) = fun () ->

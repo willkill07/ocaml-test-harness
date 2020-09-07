@@ -23,6 +23,8 @@ val invoke_runner : (string * (runner_result -> runner_result * (string * Json.j
 (* parameter usage: [ ("key", [ tests* ]), ..., ("keyN", [ tests* ]) ] *)
 
 val run_cmd : string -> bool * string
-val runtest : 'strtag -> 'res -> (unit -> 'arg1 -> 'res) -> 'arg1 -> unit -> result
-val runtest2 : 'strtag -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'res) -> 'arg1 -> 'arg2 -> unit -> result
-val runtest3 : 'strtag -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> unit -> result
+val runtest : string -> 'res -> (unit -> 'arg1 -> 'res) -> 'arg1 -> unit -> result
+val runtest2 : string -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'res) -> 'arg1 -> 'arg2 -> unit -> result
+val runtest3 : string -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> unit -> result
+val runtest4 : string -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> unit -> result
+val runtest5 : string -> 'res -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'arg5 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'arg5 -> unit -> result

@@ -1,6 +1,6 @@
 (* CSCI 330: Lab 2
  * tail.ml
- *)
+*)
 
 (* 
 	***** PROVIDE COMMENT BLOCKS AND IMPLEMENTATIONS FOR THE FOLLOWING FUNCTIONS ***** 
