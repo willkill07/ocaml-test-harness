@@ -26,7 +26,7 @@ let check_style (name:string) checks info = fun () ->
 
 let compile (name:string) = fun () ->
   let (status, output) = run_cmd ("ocamlc -bin-annot -c " ^ name ^".ml") in
-  if status then Passed else SuiteAbort (escape output)
+  if status then Passed else SuiteAbort output
 
 let check_pervasives (name:string) = fun () -> 
   let _ = run_cmd (tailrec_bin^ " " ^name ^".cmt > tailrec.txt") in

@@ -25,8 +25,10 @@ val invoke_runner : (string * (runner_result -> runner_result * (string * Json.j
 val load_solution : string -> unit -> result
 
 val run_cmd : string -> bool * string
-val runtest : string -> 'res -> ('res -> 'res -> bool) -> (unit -> 'arg1 -> 'res) -> 'arg1 -> unit -> result
-val runtest2 : string -> 'res -> ('res -> 'res -> bool) -> (unit -> 'arg1 -> 'arg2 -> 'res) -> 'arg1 -> 'arg2 -> unit -> result
-val runtest3 : string -> 'res -> ('res -> 'res -> bool) -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> unit -> result
-val runtest4 : string -> 'res -> ('res -> 'res -> bool) -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> unit -> result
-val runtest5 : string -> 'res -> ('res -> 'res -> bool) -> (unit -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'arg5 -> 'res) -> 'arg1 -> 'arg2 -> 'arg3 -> 'arg4 -> 'arg5 -> unit -> result
+val runtest0 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'r) -> unit -> result
+val runtest1 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'r) -> 'a1 -> unit -> result
+val runtest2 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'a2 -> 'r) -> 'a1 -> 'a2 -> unit -> result
+val runtest3 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'a2 -> 'a3 -> 'r) -> 'a1 -> 'a2 -> 'a3 -> unit -> result
+val runtest4 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'a2 -> 'a3 -> 'a4 -> 'r) -> 'a1 -> 'a2 -> 'a3 -> 'a4 -> unit -> result
+val runtest5 : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'a2 -> 'a3 -> 'a4 -> 'a5 -> 'r) -> 'a1 -> 'a2 -> 'a3 -> 'a4 -> 'a5 -> unit -> result
+val runtest : string -> 'r -> ('r -> 'r -> bool) -> (unit -> 'a1 -> 'r) -> 'a1 -> unit -> result

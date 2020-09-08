@@ -18,20 +18,20 @@ let test name points (res : unit -> result) (prev : runner_result): runner_resul
     match prev with
     | Result (Abort _) | Result (SuiteAbort _) ->
       (* don't run the test *)
-      (`Assoc [("passed", `Bool false); ("points", `Int 0); ("hint", `String "Not run due to critical failure earlier")], prev)
+      (`Assoc [("passed", `Bool false); ("hint", `String "Not run due to critical failure earlier")], prev)
     | Init | Result (Passed) | Result (Failed _) ->
       (* run the test *)
       let result = res() in 
-      Printf.printf "[%d pts] Test \"%s\": Passed=%B\n  Info: %s\n"
+      Printf.printf "[%d pts] Test \"%s\": %s\n  Info: %s\n"
         points
         name
-        (match result with Passed -> true | _ -> false)
-        (match result with Passed -> "" | Failed m | Abort m | SuiteAbort m -> m);
+        (match result with Passed -> "PASSED" | Failed _ -> "FAILED" | Abort _ -> "ABORT" | SuiteAbort _ -> "FATAL")
+        (match result with Passed -> "Passed" | Failed m | Abort m | SuiteAbort m -> m);
       match result with
       | Passed ->
         (`Assoc [("passed", `Bool true); ("points", `Int points)], Result result)
       | Failed msg | SuiteAbort msg | Abort msg ->
-        (`Assoc [("passed", `Bool false); ("points", `Int 0); ("hint", `String msg)], Result result)
+        (`Assoc [("passed", `Bool false); ("hint", `String msg)], Result result)
   in (status, (name, info))
 ;;
 
@@ -105,7 +105,17 @@ let run_cmd cmd =
 
 let invoke func = func ()
 
-let runtest (tag:string) (expected:'r) (op:'r->'r->bool) func x () =
+let runtest0 (tag:string) (expected:'exp) (op:'exp->'act->bool) func () =
+  try
+    let actual = invoke func in
+    if op actual expected then
+      Passed
+    else
+      Failed "mismatch between expected and actual value"
+  with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
+;;
+
+let runtest1 (tag:string) (expected:'exp) (op:'exp->'act->bool) func x () =
   try
     let actual = invoke func x in
     if op actual expected then
@@ -115,7 +125,7 @@ let runtest (tag:string) (expected:'r) (op:'r->'r->bool) func x () =
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest2 (tag:string) (expected:'r) (op:'r->'r->bool) func x y () =
+let runtest2 (tag:string) (expected:'exp) (op:'exp->'act->bool) func x y () =
   try
     let actual = invoke func x y in
     if op actual expected then
@@ -125,7 +135,7 @@ let runtest2 (tag:string) (expected:'r) (op:'r->'r->bool) func x y () =
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest3 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z () =
+let runtest3 (tag:string) (expected:'exp) (op:'exp->'act->bool) func x y z () =
   try
     let actual = invoke func x y z in
     if op actual expected then
@@ -135,7 +145,7 @@ let runtest3 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z () =
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest4 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a () =
+let runtest4 (tag:string) (expected:'exp) (op:'exp->'act->bool) func x y z a () =
   try
     let actual = invoke func x y z a in
     if op actual expected then
@@ -145,7 +155,7 @@ let runtest4 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a () =
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
-let runtest5 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a b () =
+let runtest5 (tag:string) (expected:'exp) (op:'exp->'act->bool) func x y z a b () =
   try
     let actual = invoke func x y z a b in
     if op actual expected then
@@ -155,6 +165,9 @@ let runtest5 (tag:string) (expected:'r) (op:'r->'r->bool) func x y z a b () =
   with Failure str -> Failed str | e -> Failed (Printexc.to_string e)
 ;;
 
+let runtest = runtest1
+;;
+
 let load_solution name = fun () ->
   let output = name ^ "_plugin.ml" in
   let compiled = name ^ "_plugin.cmo" in
@@ -162,4 +175,4 @@ let load_solution name = fun () ->
         if status then 
           (Dynlink.loadfile compiled; Passed)
         else
-          SuiteAbort (escape output);
+          SuiteAbort output;
