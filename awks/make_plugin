@@ -8,5 +8,5 @@ BEGIN{
     print "    " $0 " = " $2;
 }
 END {
-    print "  end\n\nlet() = p := Some (module M:PLUG)";
+    print "  end\n\nlet() = __" module "__plugin_ref := Some (module M:PLUG)";
 }

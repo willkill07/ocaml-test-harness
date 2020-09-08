@@ -9,6 +9,6 @@ BEGIN {
 END {
     print "  end"
     print ";;"
-    print "let p = ref None;;"
-    print "let get_plugin () : (module PLUG)  = match !p with | Some s -> s | None -> failwith \"No plugin loaded\""
+    print "let __" module "__plugin_ref = ref None;;"
+    print "let get_" module "_plugin () : (module PLUG)  = match !__" module "__plugin_ref with | Some s -> s | None -> failwith \"No plugin loaded\""
 }
